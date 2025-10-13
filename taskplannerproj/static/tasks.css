@@ -1,6 +1,3 @@
-/* ===============================
-   TASKS PAGE DESIGN
-================================*/
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -104,6 +101,20 @@ body {
 
 .update-btn:hover {
     background: #1e8449;
+}
+
+.delete-btn {
+    background: rgb(232, 85, 85);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+.delete-btn:hover {
+    background: red;
 }
 
 /* Empty Message */

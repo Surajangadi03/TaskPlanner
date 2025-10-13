@@ -39,6 +39,7 @@
                 {% endif %}
             </div>
             <a href="{% url 'update_task' task.id %}" class="update-btn">Update Task</a>
+            <a href="{% url 'delete_task' task.id %}" class="delete-btn"  onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
         </div>
         {% endfor %}
     {% else %}

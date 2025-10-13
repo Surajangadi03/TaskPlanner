@@ -66,18 +66,29 @@ def add_task(request, sprint_id):
 
 
 def update_task(request, task_id):
-    "Update task status or assignee"
+    "Update task status, priority, or assignee"
     task = get_object_or_404(Task, id=task_id)
     users = User.objects.all()
+
     if request.method == 'POST':
         task.status = request.POST.get('status')
+        task.priority = request.POST.get('priority')  # <-- Add this line
         assignee_id = request.POST.get('assignee')
         task.assignee = User.objects.get(id=assignee_id) if assignee_id else None
+
         task.save()
         messages.success(request, "Task updated successfully!")
         return redirect('task_list', sprint_id=task.sprint.id)
+
     return render(request, 'update_task.html', {'task': task, 'users': users})
 
+def delete_task(request, task_id):
+    "Delete a task"
+    task = get_object_or_404(Task, id=task_id)
+    sprint_id = task.sprint.id  # store sprint id before deleting
+    task.delete()
+    messages.success(request, "Task deleted successfully!")
+    return redirect('task_list', sprint_id=sprint_id)
 
 # User-specific Tasks
 def user_tasks(request, user_id):

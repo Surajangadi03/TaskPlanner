@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Task</title>
+    <link rel="stylesheet" href="{% static 'update_task.css' %}">
+</head>
+<body>
+    <h1>Update Task: {{ task.title }}</h1>
+
+    <!-- Back link -->
+    <a href="{% url 'task_list' task.sprint.id %}">Back to Tasks</a>
+
+    <!-- Display messages -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Update Task Form -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Status -->
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="todo" {% if task.status == "todo" %}selected{% endif %}>To Do</option>
+            <option value="in_progress" {% if task.status == "in_progress" %}selected{% endif %}>In Progress</option>
+            <option value="done" {% if task.status == "done" %}selected{% endif %}>Done</option>
+        </select><br><br>
+
+        <!-- Priority -->
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority">
+            <option value="low" {% if task.priority == "low" %}selected{% endif %}>Low</option>
+            <option value="medium" {% if task.priority == "medium" %}selected{% endif %}>Medium</option>
+            <option value="high" {% if task.priority == "high" %}selected{% endif %}>High</option>
+        </select><br><br>
+
+        <!-- Assignee -->
+        <label for="assignee">Assign to User:</label>
+        <select id="assignee" name="assignee">
+            <option value="">-- Select User --</option>
+            {% for user in users %}
+                <option value="{{ user.id }}" {% if task.assignee and task.assignee.id == user.id %}selected{% endif %}>
+                    {{ user.username }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <!-- Submit -->
+        <button type="submit">Update Task</button>
+    </form>
+</body>
+</html>

@@ -11,4 +11,5 @@ urlpatterns = [
     path('tasks/<int:task_id>/update/', views.update_task, name='update_task'),
     path('users/<int:user_id>/tasks/', views.user_tasks, name='user_tasks'),
     path('sprints/<int:sprint_id>/ai-suggestions/', views.ai_suggestions, name='ai_suggestions'),
+    path('task/<int:task_id>/delete/', views.delete_task, name='delete_task'),
 ]
