@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="{% static 'tasks.css' %}">
+</head>
+<body>
+
+<div class="tasks-container">
+    <div class="tasks-header">
+        <h2>
+            {% if sprint %}
+                Tasks for {{ sprint.name }}
+            {% elif user_view %}
+                Tasks assigned to {{ user_view.username }}
+            {% else %}
+                All Tasks
+            {% endif %}
+        </h2>
+
+        {% if sprint %}
+            <a href="{% url 'add_task' sprint.id %}">+ Add Task</a>
+        {% endif %}
+    </div>
+
+    {% if tasks %}
+        {% for task in tasks %}
+        <div class="task-card">
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.description }}</p>
+            <div class="task-meta">
+                <span><strong>Type:</strong> {{ task.task_type }}</span>
+                <span><strong>Status:</strong> {{ task.status }}</span>
+                <span><strong>Priority:</strong> {{ task.priority }}</span>
+                {% if task.assignee %}
+                    <span><strong>Assignee:</strong> {{ task.assignee.username }}</span>
+                {% endif %}
+            </div>
+            <a href="{% url 'update_task' task.id %}" class="update-btn">Update Task</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="empty-message">No tasks found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

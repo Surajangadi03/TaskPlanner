@@ -35,7 +35,7 @@ def task_list(request, sprint_id):
     "List all tasks for a specific sprint"
     sprint = get_object_or_404(Sprint, id=sprint_id)
     tasks = sprint.tasks.all()
-    return render(request, 'planner/tasks.html', {'tasks': tasks, 'sprint': sprint})
+    return render(request, 'tasks.html', {'tasks': tasks, 'sprint': sprint})
 
 def add_task(request, sprint_id):
     """Add a task to a specific sprint"""
@@ -62,7 +62,7 @@ def add_task(request, sprint_id):
         messages.success(request, "Task added successfully!")
         return redirect('task_list', sprint_id=sprint.id)
 
-    return render(request, 'planner/add_task.html', {'sprint': sprint, 'users': users})
+    return render(request, 'add_task.html', {'sprint': sprint, 'users': users})
 
 
 def update_task(request, task_id):
@@ -76,7 +76,7 @@ def update_task(request, task_id):
         task.save()
         messages.success(request, "Task updated successfully!")
         return redirect('task_list', sprint_id=task.sprint.id)
-    return render(request, 'planner/update_task.html', {'task': task, 'users': users})
+    return render(request, 'update_task.html', {'task': task, 'users': users})
 
 
 # User-specific Tasks
@@ -84,7 +84,7 @@ def user_tasks(request, user_id):
     "Show all tasks assigned to a user"
     user = get_object_or_404(User, id=user_id)
     tasks = user.tasks.all()
-    return render(request, 'planner/tasks.html', {'tasks': tasks, 'sprint': None, 'user_view': user})
+    return render(request, 'tasks.html', {'tasks': tasks, 'sprint': None, 'user_view': user})
 
 
 # AI Suggestions
@@ -92,7 +92,7 @@ def ai_suggestions(request, sprint_id):
     "Simple AI suggestion:Show last 3 tasks of sprint as suggestions for new tasks"
     sprint = get_object_or_404(Sprint, id=sprint_id)
     suggestions = sprint.tasks.order_by('-created_at')[:3]
-    return render(request, 'planner/ai_suggestions.html', {'sprint': sprint, 'suggestions': suggestions})
+    return render(request, 'ai_suggestions.html', {'sprint': sprint, 'suggestions': suggestions})
 
 
 
