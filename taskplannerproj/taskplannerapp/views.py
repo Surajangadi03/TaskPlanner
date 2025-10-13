@@ -27,7 +27,7 @@ def add_sprint(request):
         )
         messages.success(request, "Sprint created successfully!")
         return redirect('sprint_list')
-    return render(request, 'planner/add_sprint.html')
+    return render(request, 'add_sprint.html')
 
 
 # Task Views

@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Sprint</title>
+    <link rel="stylesheet" href="{% static 'add_sprint.css' %}">
+</head>
+<body>
+    <h1>Add New Sprint</h1>
+
+    <!-- Back link -->
+    <a href="{% url 'sprint_list' %}">Back to Sprints</a>
+
+    <!-- Display success/error messages -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Sprint creation form -->
+    <form method="POST">
+        {% csrf_token %}
+        <label for="name">Sprint Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+
+        <label for="start_date">Start Date:</label><br>
+        <input type="date" id="start_date" name="start_date"><br><br>
+
+        <label for="end_date">End Date:</label><br>
+        <input type="date" id="end_date" name="end_date"><br><br>
+
+        <button type="submit">Create Sprint</button>
+    </form>
+</body>
+</html>
