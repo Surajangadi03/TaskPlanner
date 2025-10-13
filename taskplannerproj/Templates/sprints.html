@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sprints</title>
+    <link rel="stylesheet" href="{% static 'sprints.css' %}">
+</head>
+<body>
+    <h1>All Sprints</h1>
+
+    <!-- Link to add a new sprint -->
+    <a href="{% url 'add_sprint' %}">Add New Sprint</a>
+
+    <!-- Display messages -->
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Sprint List -->
+    <ul>
+        {% for sprint in sprints %}
+            <li>
+                <strong>{{ sprint.name }}</strong> 
+                ({{ sprint.start_date }} - {{ sprint.end_date }})  
+                | <a href="{% url 'task_list' sprint.id %}">View Tasks</a>
+            </li>
+        {% empty %}
+            <li>No sprints available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

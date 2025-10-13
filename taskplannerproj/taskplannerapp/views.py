@@ -9,7 +9,7 @@ from django.contrib import messages
 def sprint_list(request):
     "List all sprints"
     sprints = Sprint.objects.all()
-    return render(request, 'planner/sprints.html', {'sprints': sprints})
+    return render(request, 'sprints.html', {'sprints': sprints})
 
 def add_sprint(request):
     "Add a new sprint"
