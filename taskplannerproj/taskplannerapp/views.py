@@ -37,6 +37,33 @@ def task_list(request, sprint_id):
     tasks = sprint.tasks.all()
     return render(request, 'planner/tasks.html', {'tasks': tasks, 'sprint': sprint})
 
+def add_task(request, sprint_id):
+    """Add a task to a specific sprint"""
+    sprint = get_object_or_404(Sprint, id=sprint_id)
+    users = User.objects.all()
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        task_type = request.POST.get('task_type')
+        status = request.POST.get('status')
+        priority = request.POST.get('priority')
+        assignee_id = request.POST.get('assignee')
+        assignee = User.objects.get(id=assignee_id) if assignee_id else None
+
+        Task.objects.create(
+            title=title,
+            description=description,
+            task_type=task_type,
+            status=status,
+            priority=priority,
+            sprint=sprint,
+            assignee=assignee
+        )
+        messages.success(request, "Task added successfully!")
+        return redirect('task_list', sprint_id=sprint.id)
+
+    return render(request, 'planner/add_task.html', {'sprint': sprint, 'users': users})
+
 
 
 
