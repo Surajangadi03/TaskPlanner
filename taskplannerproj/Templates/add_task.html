@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Task</title>
+    <link rel="stylesheet" href="{% static 'add_task.css' %}">
+</head>
+<body>
+    <h1>Add Task to Sprint: {{ sprint.name }}</h1>
+
+    <!-- Back link -->
+    <a href="{% url 'task_list' sprint.id %}">Back to Tasks</a>
+
+    <!-- Display messages -->
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Task creation form -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+
+        <label for="task_type">Task Type:</label><br>
+        <select id="task_type" name="task_type" required>
+            <option value="bug">Bug</option>
+            <option value="feature">Feature</option>
+            <option value="story">Story</option>
+        </select><br><br>
+
+        <label for="status">Status:</label><br>
+        <select id="status" name="status">
+            <option value="todo">To Do</option>
+            <option value="in_progress">In Progress</option>
+            <option value="done">Done</option>
+        </select><br><br>
+
+        <label for="priority">Priority:</label><br>
+        <select id="priority" name="priority">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+        </select><br><br>
+
+        <label for="assignee">Assign to User:</label><br>
+        <select id="assignee" name="assignee">
+            <option value="">-- Select User --</option>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Add Task</button>
+    </form>
+</body>
+</html>
