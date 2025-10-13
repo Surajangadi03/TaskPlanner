@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Task Suggestions</title>
+    <link rel="stylesheet" href="{% static 'ai_suggestions.css' %}">
+</head>
+<body>
+    <h1>AI Suggestions for Sprint: {{ sprint.name }}</h1>
+
+    <!-- Back link -->
+    <a href="{% url 'task_list' sprint.id %}">Back to Tasks</a>
+
+    <!-- Suggestions -->
+    {% if suggestions %}
+        <ul class="suggestions">
+            {% for task in suggestions %}
+                <li>
+                    <strong>{{ task.title }}</strong><br>
+                    <em>{{ task.description }}</em><br>
+                    Type: {{ task.task_type }} | Status: {{ task.status }} | Priority: {{ task.priority }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No AI suggestions available for this sprint.</p>
+    {% endif %}
+</body>
+</html>

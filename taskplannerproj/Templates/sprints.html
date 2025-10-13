@@ -28,6 +28,7 @@
                 <strong>{{ sprint.name }}</strong> 
                 ({{ sprint.start_date }} - {{ sprint.end_date }})  
                 | <a href="{% url 'task_list' sprint.id %}">View Tasks</a>
+                 <a href="{% url 'ai_suggestions' sprint.id %}">AI Suggestions</a>
             </li>
         {% empty %}
             <li>No sprints available.</li>
